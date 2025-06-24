@@ -27,4 +27,11 @@ public class TaskService {
     public Task save(Task task) {
         return taskRepository.save(task);
     }
+
+    public void deleteTask(Long id) {
+        if (!taskRepository.existsById(id)) {
+            throw new RuntimeException("Task não encontrada");
+        }
+        taskRepository.deleteById(id);
+    }
 }

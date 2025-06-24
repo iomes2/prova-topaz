@@ -13,35 +13,43 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    // Create a new task
+    // Criar nova tarefa
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task savedTask = taskService.createTask(task);
         return ResponseEntity.status(201).body(savedTask);
     }
 
-    // Get all tasks
+    // Obter tarefas
     @GetMapping
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
 
-    // Get task by ID
+    // Procurar tarefa por ID
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task = taskService.getTaskById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new RuntimeException("Task não encontrada"));
         return ResponseEntity.ok(task);
     }
 
-    // Update task status
+    // Atualizar tarefa
     @PutMapping("/{id}/status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody TaskStatus status) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO) {
         Task task = taskService.getTaskById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
-        task.setStatus(status);
+                .orElseThrow(() -> new RuntimeException("Task não encontrada"));
+        task.setStatus(statusDTO.getStatus());
         Task updatedTask = taskService.save(task);
         return ResponseEntity.ok(updatedTask);
     }
+
+    // Deletar tarefa
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
