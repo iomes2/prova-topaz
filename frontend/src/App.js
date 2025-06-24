@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('NOT_STARTED');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("NOT_STARTED");
   const [selectedTask, setSelectedTask] = useState(null);
   const [editTaskId, setEditTaskId] = useState(null);
-  const [editStatus, setEditStatus] = useState('NOT_STARTED');
+  const [editStatus, setEditStatus] = useState("NOT_STARTED");
 
   useEffect(() => {
     fetchTasks();
   }, []);
 
   const fetchTasks = async () => {
-    const response = await axios.get('http://localhost:8080/api/tasks');
+    const response = await axios.get("http://localhost:8080/api/tasks");
     setTasks(response.data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:8080/api/tasks', { title, description, status });
+    await axios.post("http://localhost:8080/api/tasks", {
+      title,
+      description,
+      status,
+    });
     fetchTasks();
-    setTitle('');
-    setDescription('');
-    setStatus('NOT_STARTED');
+    setTitle("");
+    setDescription("");
+    setStatus("NOT_STARTED");
   };
 
   const handleView = (task) => {
@@ -34,10 +38,16 @@ function App() {
   };
 
   const handleUpdateStatus = async (taskId) => {
-    await axios.put(`http://localhost:8080/api/tasks/${taskId}/status`, editStatus);
+    await axios.put(
+      `http://localhost:8080/api/tasks/${taskId}/status`,
+      { status: editStatus },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     fetchTasks();
     setEditTaskId(null);
-    setEditStatus('NOT_STARTED');
+    setEditStatus("NOT_STARTED");
   };
 
   return (
@@ -67,13 +77,20 @@ function App() {
           <option value="IN_PROGRESS">In Progress</option>
           <option value="COMPLETED">Completed</option>
         </select>
-        <button type="submit" className="bg-blue-500 text-white p-2">Add Task</button>
+        <button type="submit" className="bg-blue-500 text-white p-2">
+          Add Task
+        </button>
       </form>
       <ul>
         {tasks.map((task) => (
           <li key={task.id} className="mb-2">
             {task.title} - {task.status}
-            <button onClick={() => handleView(task)} className="ml-2 bg-green-500 text-white p-1">View Details</button>
+            <button
+              onClick={() => handleView(task)}
+              className="ml-2 bg-green-500 text-white p-1"
+            >
+              View Details
+            </button>
             <button
               onClick={() => {
                 setEditTaskId(task.id);
@@ -92,7 +109,12 @@ function App() {
           <p>Title: {selectedTask.title}</p>
           <p>Description: {selectedTask.description}</p>
           <p>Status: {selectedTask.status}</p>
-          <button onClick={() => setSelectedTask(null)} className="bg-red-500 text-white p-1">Close</button>
+          <button
+            onClick={() => setSelectedTask(null)}
+            className="bg-red-500 text-white p-1"
+          >
+            Close
+          </button>
         </div>
       )}
       {editTaskId && (
@@ -116,7 +138,7 @@ function App() {
           <button
             onClick={() => {
               setEditTaskId(null);
-              setEditStatus('NOT_STARTED');
+              setEditStatus("NOT_STARTED");
             }}
             className="ml-2 bg-red-500 text-white p-1"
           >
