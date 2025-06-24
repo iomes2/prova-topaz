@@ -25,7 +25,7 @@ Aplicação web de lista de tarefas (To-Do List) com backend em Java (Spring Boo
 1. Clone o repositório:
    ```sh
    git clone https://github.com/iomes2/prova-topaz
-   cd seu-repo
+   cd prova-topaz
    ```
 
 2. Suba os containers:
