@@ -24,7 +24,7 @@ Aplicação web de lista de tarefas (To-Do List) com backend em Java (Spring Boo
 
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/seu-usuario/seu-repo.git
+   git clone https://github.com/iomes2/prova-topaz
    cd seu-repo
    ```
 
@@ -85,8 +85,3 @@ PUT /api/tasks/1/status
 - O código está comentado e organizado por camadas.
 
 ---
-
-## Autor
-
-Seu Nome  
-[Seu LinkedIn](https://www.linkedin.com/in/seu-perfil)
