@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./backend/todolist  # Ajuste para o diretório correto do backend
+      context: ./backend/todolist
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
